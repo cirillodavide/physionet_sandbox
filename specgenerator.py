@@ -5,14 +5,14 @@ import matplotlib.pyplot as plt
 import os
 import time
 import glob
-from tqdm import tqdm
+#from tqdm import tqdm
 
 freq = 300
 secs = 10
 max_length = 61
 
 
-path = 'training2017/*.mat'
+path = 'training2017/*.mat' # download the original .mat files from https://physionet.org/content/challenge-2017/1.0.0/
 
 def zero_pad(data, length):
     extended = np.zeros(length)
@@ -41,5 +41,5 @@ for file in glob.glob(path):
     plt.ylabel('Frequency (Hz)', fontsize=25)
     plt.imshow(np.transpose(Sxx[0]), aspect='auto', cmap='jet')
     plt.gca().invert_yaxis()
-    plt.savefig('training2017_images/'+tag+'.png')
+    plt.savefig('training2017_images/'+tag+'.png') # save to an output dir called "training2017_images"
     plt.close('all')
