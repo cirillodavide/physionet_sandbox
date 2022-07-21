@@ -12,7 +12,7 @@ secs = 10
 max_length = 61
 
 
-path = 'training2017/*.mat' # download the original .mat files from https://physionet.org/content/challenge-2017/1.0.0/
+path = 'balanced_training2017/*.mat' # download the original .mat files from https://physionet.org/content/challenge-2017/1.0.0/
 
 def zero_pad(data, length):
     extended = np.zeros(length)
@@ -29,7 +29,7 @@ def spectrogram(data, fs=300, nperseg=64, noverlap=32):
         return f, t, Sxx
 
 for file in glob.glob(path):
-    tag = os.path.basename(file).split('.')[0]
+    tag = '.'.join(os.path.basename(file).split('.')[:-1])
     data = sio.loadmat(file)['val'][0]
     data = zero_pad(data, max_length * freq)
     _, t, Sxx = spectrogram(np.expand_dims(data, axis=0))
@@ -41,5 +41,5 @@ for file in glob.glob(path):
     plt.ylabel('Frequency (Hz)', fontsize=25)
     plt.imshow(np.transpose(Sxx[0]), aspect='auto', cmap='jet')
     plt.gca().invert_yaxis()
-    plt.savefig('training2017_images/'+tag+'.png') # save to an output dir called "training2017_images"
+    plt.savefig('balanced_training2017_images/'+tag+'.png') # save to an output dir called "training2017_images"
     plt.close('all')
